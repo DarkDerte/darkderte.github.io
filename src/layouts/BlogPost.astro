@@ -58,11 +58,12 @@ const { title, description, pubDate, updatedDate, heroImage, link } = Astro.prop
 		<Header />
 		<main>
 			<article>
-				<a href={link}>
 					<div class="hero-image">
-						{heroImage && <img width={1020} height={510} src={heroImage} alt="" />}
+						{link && <a href={link}>
+							{heroImage && <img width={1020} height={510} src={heroImage} alt="" />}
+						</a>}
+						{!link && heroImage && <img width={1020} height={510} src={heroImage} alt="" />}
 					</div>
-				</a>
 				<div class="prose">
 					<div class="title">
 						<div class="date">
