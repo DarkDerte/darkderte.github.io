@@ -19,6 +19,8 @@ Los proyectos se escriben como archivos Markdown o MDX en su colección:
 - Aplicaciones: `src/content/apps/`
 - Hardware: `src/content/hardware/`
 
+Los nombres siguen el formato `Nano-{servicio}`. El archivo también usa ese nombre en minúsculas como slug: por ejemplo, `src/content/apps/nano-server.md` genera `/apps/nano-server/` y muestra **Nano-Server**. Para hardware, la ruta equivalente queda bajo `/hardware/`. Los enlaces a las fichas se generan a partir de esos slugs.
+
 El esquema y los campos admitidos están definidos en `src/content.config.ts`. Cada archivo debe incluir los campos obligatorios de su colección, como `title`, `description`, `category`, `status` y `stack`. Puede incluir también datos opcionales como `icon`, `url`, `repo` y `destacado`. Las categorías y estados válidos varían entre software y hardware; consulta el esquema antes de añadir una entrada.
 
 ## Desarrollo local
