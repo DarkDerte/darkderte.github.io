@@ -1,154 +1,251 @@
-/*
-  The CSS in this style tag is based off of Bear Blog's default CSS.
-  https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
-  License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
- */
-
 :root {
-	--accent: #2337ff;
-	--accent-dark: #000d8a;
-	--black: 15, 18, 25;
-	--gray: 96, 115, 159;
-	--gray-light: 229, 233, 240;
-	--gray-dark: 34, 41, 57;
-	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
-	--box-shadow: 0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
-		0 16px 32px rgba(var(--gray), 33%);
-}
-@font-face {
-	font-family: 'Atkinson';
-	src: url('/fonts/atkinson-regular.woff') format('woff');
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'Atkinson';
-	src: url('/fonts/atkinson-bold.woff') format('woff');
-	font-weight: 700;
-	font-style: normal;
-	font-display: swap;
-}
-body {
-	font-family: 'Atkinson', sans-serif;
-	margin: 0;
-	padding: 0;
-	text-align: left;
-	background: linear-gradient(var(--gray-gradient)) no-repeat;
-	background-size: 100% 600px;
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	color: rgb(var(--gray-dark));
-	font-size: 20px;
-	line-height: 1.7;
-}
-main {
-	width: 720px;
-	max-width: calc(100% - 2em);
-	margin: auto;
-	padding: 3em 1em;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	margin: 0 0 0.5rem 0;
-	color: rgb(var(--black));
-	line-height: 1.2;
-}
-h1 {
-	font-size: 3.052em;
-}
-h2 {
-	font-size: 2.441em;
-}
-h3 {
-	font-size: 1.953em;
-}
-h4 {
-	font-size: 1.563em;
-}
-h5 {
-	font-size: 1.25em;
-}
-strong,
-b {
-	font-weight: 700;
-}
-a {
-	color: var(--accent);
-}
-a:hover {
-	color: var(--accent);
-}
-p {
-	margin-bottom: 1em;
-}
-.prose p {
-	margin-bottom: 2em;
-}
-textarea {
-	width: 100%;
-	font-size: 16px;
-}
-input {
-	font-size: 16px;
-}
-table {
-	width: 100%;
-}
-img {
-	max-width: 100%;
-	height: auto;
-	border-radius: 8px;
-}
-code {
-	padding: 2px 5px;
-	background-color: rgb(var(--gray-light));
-	border-radius: 2px;
-}
-pre {
-	padding: 1.5em;
-	border-radius: 8px;
-}
-pre > code {
-	all: unset;
-}
-blockquote {
-	border-left: 4px solid var(--accent);
-	padding: 0 0 0 20px;
-	margin: 0px;
-	font-size: 1.333em;
-}
-hr {
-	border: none;
-	border-top: 1px solid rgb(var(--gray-light));
-}
-@media (max-width: 720px) {
-	body {
-		font-size: 18px;
-	}
-	main {
-		padding: 1em;
-	}
+  --fondo: #0b0f0a;
+  --superficie: #11170f;
+  --texto: #e8f0e3;
+  --texto-suave: #b7c3ad;
+  --texto-apagado: #74806b;
+  --acento: #a3e635;
+  --hardware-acento: #22d3ee;
+  --web-acento: #fbbf24;
+  --amarillo: #facc15;
+  --ciano: #22d3ee;
+  --borde: #22301c;
+  --mono: ui-monospace, 'Cascadia Code', 'JetBrains Mono', Consolas, monospace;
+  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
 
-.sr-only {
-	border: 0;
-	padding: 0;
-	margin: 0;
-	position: absolute !important;
-	height: 1px;
-	width: 1px;
-	overflow: hidden;
-	/* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
-	clip: rect(1px 1px 1px 1px);
-	/* maybe deprecated but we need to support legacy browsers */
-	clip: rect(1px, 1px, 1px, 1px);
-	/* modern browsers, clip-path works inwards from each corner */
-	clip-path: inset(50%);
-	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
-	white-space: nowrap;
+body[data-area='hardware'] {
+  --acento: var(--hardware-acento);
+}
+
+body[data-area='web'] {
+  --acento: var(--web-acento);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: var(--sans);
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+::selection {
+  background: var(--acento);
+  color: #0b0f0a;
+}
+
+a {
+  color: var(--acento);
+}
+
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 3px;
+}
+
+/* Category filters use native radio inputs and CSS only; each catalog owns its own filter. */
+.catalogo-filtrable:has([data-filtro='Juego']:checked) [data-categoria]:not([data-categoria='Juego']),
+.catalogo-filtrable:has([data-filtro='Utilidad']:checked) [data-categoria]:not([data-categoria='Utilidad']),
+.catalogo-filtrable:has([data-filtro='Herramienta']:checked) [data-categoria]:not([data-categoria='Herramienta']),
+.catalogo-filtrable:has([data-filtro='Productividad']:checked) [data-categoria]:not([data-categoria='Productividad']),
+.catalogo-filtrable:has([data-filtro='Web']:checked) [data-categoria]:not([data-categoria='Web']),
+.catalogo-filtrable:has([data-filtro='Placa']:checked) [data-categoria]:not([data-categoria='Placa']),
+.catalogo-filtrable:has([data-filtro='Dispositivo']:checked) [data-categoria]:not([data-categoria='Dispositivo']),
+.catalogo-filtrable:has([data-filtro='Periférico']:checked) [data-categoria]:not([data-categoria='Periférico']),
+.catalogo-filtrable:has([data-filtro='Experimento']:checked) [data-categoria]:not([data-categoria='Experimento']) {
+  display: none !important;
+}
+
+img {
+  max-width: 100%;
+}
+
+.contenedor {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--acento);
+  color: #0b0f0a;
+  padding: 0.5rem 1rem;
+  z-index: 100;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+
+/* Hero */
+.hero {
+  padding: 5rem 0 4rem;
+}
+.hero-terminal {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--texto-apagado);
+  margin-bottom: 1.5rem;
+}
+.hero-terminal .prompt {
+  color: var(--acento);
+}
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  margin: 0 0 1.25rem;
+}
+.hero h1 .destacado {
+  color: var(--acento);
+}
+.hero .sub {
+  font-size: 1.15rem;
+  color: var(--texto-suave);
+  max-width: 42rem;
+  margin: 0 0 2rem;
+}
+.hero .cta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.btn {
+  display: inline-block;
+  padding: 0.7rem 1.4rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.btn-primario {
+  background: var(--acento);
+  color: #0b0f0a;
+}
+.btn-primario:hover {
+  background: #bef264;
+}
+.btn-secundario {
+  border: 1px solid var(--borde);
+  color: var(--texto);
+}
+.btn-secundario:hover {
+  border-color: var(--acento);
+}
+
+/* Métricas / badges */
+.metricas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1px;
+  background: var(--borde);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 3rem 0;
+}
+.metrica {
+  background: var(--superficie);
+  padding: 1.25rem;
+}
+.metrica .num {
+  font-family: var(--mono);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--acento);
+  display: block;
+}
+.metrica .etq {
+  font-size: 0.8rem;
+  color: var(--texto-apagado);
+}
+
+/* Secciones generales */
+.seccion {
+  padding: 3rem 0;
+}
+.seccion-titulo {
+  font-size: 1.6rem;
+  letter-spacing: -0.02em;
+  margin: 0 0 1.5rem;
+}
+.seccion-titulo .num {
+  font-family: var(--mono);
+  color: var(--acento);
+  font-size: 0.9em;
+  margin-right: 0.5rem;
+}
+.prosa {
+  max-width: 42rem;
+}
+.prosa p {
+  color: var(--texto-suave);
+  font-size: 1.05rem;
+}
+.prosa strong {
+  color: var(--texto);
+}
+
+/* Principios */
+.principios {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.principio {
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  padding: 1.25rem;
+  background: var(--superficie);
+}
+.principio .ic {
+  font-family: var(--mono);
+  color: var(--acento);
+  font-size: 0.85rem;
+}
+.principio h3 {
+  margin: 0.5rem 0;
+  font-size: 1.05rem;
+}
+.principio p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--texto-suave);
+}
+
+/* Grid de apps */
+.grid-apps {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Pie de página del index */
+.enlace-mas {
+  margin-top: 2rem;
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 3.5rem 0 2.5rem;
+  }
 }

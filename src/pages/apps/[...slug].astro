@@ -1,0 +1,160 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const apps = await getCollection('apps');
+  return apps.map((app) => ({
+    params: { slug: app.id },
+    props: { app },
+  }));
+}
+
+const { app } = Astro.props;
+const { Content } = await render(app);
+const estado = app.data.status.replaceAll(' ', '-');
+---
+
+<Layout
+  area="codigo"
+  title={`${app.data.title} — CodigoMinimo`}
+  description={app.data.description}
+>
+  <section class="hero contenedor">
+    <p class="hero-terminal">
+      <span class="prompt">$</span> cat apps/{app.id}.md · <span class="ficha">apps/{app.data.category.toLowerCase()}</span>
+    </p>
+    <div class="detalle-cab">
+      <span class="detalle-icono" aria-hidden="true">{app.data.icon ?? '▣'}</span>
+      <span class={`estado estado-${estado}`}>{app.data.status}</span>
+    </div>
+    <h1>{app.data.title}</h1>
+    <p class="sub">{app.data.description}</p>
+
+    <dl class="ficha">
+      <div><dt>Categoría</dt><dd>{app.data.category}</dd></div>
+      <div><dt>Stack</dt><dd>{app.data.stack.join(', ')}</dd></div>
+      <div><dt>Tamaño aprox.</dt><dd>{app.data.size ?? 'sin medir'}</dd></div>
+    </dl>
+
+    {
+      (app.data.url || app.data.repo) && (
+        <div class="cta">
+          {app.data.url && <a class="btn btn-primario" href={app.data.url}>Abrir app</a>}
+          {app.data.repo && <a class="btn btn-secundario" href={app.data.repo}>Ver código</a>}
+        </div>
+      )
+    }
+  </section>
+
+  <article class="seccion contenedor">
+    <div class="contenido prosa">
+      <Content />
+    </div>
+  </article>
+
+  <section class="seccion contenedor">
+    <p class="enlace-mas"><a href="/codigo/#apps">← Volver a CodigoMinimo</a></p>
+  </section>
+</Layout>
+
+<style>
+  .detalle-cab {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .detalle-icono {
+    font-size: 1.6rem;
+  }
+  .hero h1 {
+    margin-bottom: 0.75rem;
+  }
+  .hero .sub {
+    margin-bottom: 1.75rem;
+  }
+  .estado {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--borde);
+    color: var(--texto-suave);
+  }
+  .estado-publicada { color: var(--acento); }
+  .estado-beta { color: var(--amarillo); }
+  .estado-idea { color: var(--texto-apagado); }
+  .estado-en-desarrollo { color: var(--ciano); }
+
+  .ficha {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--borde);
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 0 0 1.75rem;
+    max-width: 44rem;
+  }
+  .ficha div {
+    background: var(--superficie);
+    padding: 0.9rem 1rem;
+    margin: 0;
+  }
+  .ficha dt {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--texto-apagado);
+  }
+  .ficha dd {
+    margin: 0.25rem 0 0;
+    font-size: 0.9rem;
+  }
+  .hero-terminal .ficha {
+    display: inline;
+    background: none;
+    border: none;
+    color: var(--texto-apagado);
+  }
+
+  .contenido {
+    max-width: 44rem;
+  }
+  .contenido :global(h2) {
+    font-size: 1.3rem;
+    letter-spacing: -0.02em;
+    margin-top: 2.5rem;
+  }
+  .contenido :global(p) {
+    color: var(--texto-suave);
+  }
+  .contenido :global(li) {
+    color: var(--texto-suave);
+  }
+  .contenido :global(code) {
+    font-family: var(--mono);
+    background: var(--superficie);
+    border: 1px solid var(--borde);
+    border-radius: 4px;
+    padding: 0.1rem 0.35rem;
+    font-size: 0.85em;
+  }
+  .contenido :global(pre) {
+    background: var(--superficie);
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    overflow-x: auto;
+  }
+  .contenido :global(pre code) {
+    background: none;
+    border: none;
+    padding: 0;
+  }
+</style>

@@ -1,0 +1,83 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const hardware = await getCollection('hardware');
+  return hardware.map((item) => ({
+    params: { slug: item.id },
+    props: { item },
+  }));
+}
+
+const { item } = Astro.props;
+const { Content } = await render(item);
+const estado = item.data.status.replaceAll(' ', '-');
+---
+
+<Layout area="hardware" title={`${item.data.title} — HardwareSimple`} description={item.data.description}>
+  <section class="hero contenedor">
+    <p class="hero-terminal"><span class="prompt">$</span> cat hardware/{item.id}.md</p>
+    <div class="detalle-cab">
+      <span class="detalle-icono" aria-hidden="true">{item.data.icon ?? '⌁'}</span>
+      <span class={`estado estado-${estado}`}>{item.data.status}</span>
+    </div>
+    <h1>{item.data.title}</h1>
+    <p class="sub">{item.data.description}</p>
+    <dl class="ficha">
+      <div><dt>Categoría</dt><dd>{item.data.category}</dd></div>
+      <div><dt>Componentes y tecnologías</dt><dd>{item.data.stack.join(', ')}</dd></div>
+    </dl>
+    {(item.data.url || item.data.repo) && (
+      <div class="cta">
+        {item.data.url && <a class="btn btn-primario" href={item.data.url}>Ver proyecto</a>}
+        {item.data.repo && <a class="btn btn-secundario" href={item.data.repo}>Ver código</a>}
+      </div>
+    )}
+  </section>
+  <article class="seccion contenedor">
+    <div class="contenido prosa"><Content /></div>
+    <p class="enlace-mas"><a href="/hardware">← Volver a hardware</a></p>
+  </article>
+</Layout>
+
+<style>
+  .detalle-cab { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+  .detalle-icono { color: var(--acento); font-size: 1.6rem; }
+  .estado {
+    padding: 0.25rem 0.6rem;
+    border: 1px solid var(--borde);
+    border-radius: 999px;
+    color: var(--texto-suave);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+  }
+  .estado-publicado { color: var(--acento); }
+  .estado-beta { color: var(--amarillo); }
+  .estado-idea { color: var(--texto-apagado); }
+  .estado-en-desarrollo { color: var(--ciano); }
+  .ficha {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    max-width: 44rem;
+    margin: 0 0 1.75rem;
+    overflow: hidden;
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    background: var(--borde);
+    gap: 1px;
+  }
+  .ficha div { margin: 0; padding: 0.9rem 1rem; background: var(--superficie); }
+  .ficha dt {
+    color: var(--texto-apagado);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+  }
+  .ficha dd { margin: 0.25rem 0 0; font-size: 0.9rem; }
+  .contenido { max-width: 44rem; }
+  .contenido :global(p), .contenido :global(li) { color: var(--texto-suave); }
+  .contenido :global(h2) { margin-top: 2.5rem; font-size: 1.3rem; }
+  .enlace-mas { margin-top: 2rem; }
+</style>

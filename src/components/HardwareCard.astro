@@ -1,0 +1,100 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  item: CollectionEntry<'hardware'>;
+}
+
+const { item } = Astro.props;
+const estado = item.data.status.replaceAll(' ', '-');
+---
+
+<article class="tarjeta" data-categoria={item.data.category}>
+  <a href={`/hardware/${item.id}/`} class="tarjeta-enlace">
+    <div class="tarjeta-cab">
+      <span class="tarjeta-icono" aria-hidden="true">{item.data.icon ?? '⌁'}</span>
+      <span class={`estado estado-${estado}`}>{item.data.status}</span>
+    </div>
+    <h3 class="tarjeta-titulo">{item.data.title}</h3>
+    <p class="tarjeta-desc">{item.data.description}</p>
+    <div class="tarjeta-meta">
+      <span>{item.data.category}</span>
+      <span>{item.data.stack.join(' · ')}</span>
+    </div>
+  </a>
+</article>
+
+<style>
+  .tarjeta {
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    background: var(--superficie);
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .tarjeta:hover {
+    border-color: var(--acento);
+    transform: translateY(-2px);
+  }
+  .tarjeta-enlace {
+    display: block;
+    height: 100%;
+    padding: 1.25rem;
+    color: inherit;
+    text-decoration: none;
+  }
+  .tarjeta-cab,
+  .tarjeta-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  .tarjeta-cab {
+    margin-bottom: 0.75rem;
+  }
+  .tarjeta-icono {
+    color: var(--acento);
+    font-size: 1.5rem;
+  }
+  .estado {
+    padding: 0.2rem 0.5rem;
+    border: 1px solid var(--borde);
+    border-radius: 999px;
+    color: var(--texto-suave);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .estado-publicado {
+    border-color: color-mix(in srgb, var(--acento) 40%, transparent);
+    color: var(--acento);
+  }
+  .estado-beta {
+    border-color: color-mix(in srgb, var(--amarillo) 40%, transparent);
+    color: var(--amarillo);
+  }
+  .estado-idea {
+    border-color: var(--borde);
+    color: var(--texto-apagado);
+  }
+  .estado-en-desarrollo {
+    border-color: color-mix(in srgb, var(--ciano) 40%, transparent);
+    color: var(--ciano);
+  }
+  .tarjeta-titulo {
+    margin: 0 0 0.5rem;
+    font-size: 1.1rem;
+  }
+  .tarjeta-desc {
+    margin: 0 0 1rem;
+    color: var(--texto-suave);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+  .tarjeta-meta {
+    color: var(--texto-apagado);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+  }
+</style>

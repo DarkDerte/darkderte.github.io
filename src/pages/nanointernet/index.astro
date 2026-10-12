@@ -1,0 +1,69 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout area="web" title="NanoInternet — Una web recorrida con comandos" description="NanoInternet propone una web directa y ligera: navegar con comandos claros y transmitir solo el contenido necesario.">
+  <section class="hero contenedor">
+    <p class="hero-terminal"><span class="prompt">$</span> nanointernet --minimal</p>
+    <h1>La web de siempre, <span class="destacado">recorrida de otra forma.</span></h1>
+    <p class="lema">La web, comando a comando. Solo lo necesario.</p>
+    <p class="sub">NanoInternet explora una manera directa de visitar webs: escribir lo que quieres hacer, recibir el contenido concreto y seguir tu camino, con la menor cantidad de información posible en cada intercambio.</p>
+    <div class="cta"><a class="btn btn-primario" href="#idea">Conocer la propuesta</a><a class="btn btn-secundario" href="/">Volver al inicio</a></div>
+  </section>
+
+  <section class="seccion contenedor prosa" id="idea">
+    <p class="hero-terminal"><span class="prompt">$</span> cat idea.txt</p>
+    <h2>Una web basada en acciones claras</h2>
+    <p>La idea parte del internet de siempre: páginas, enlaces y contenido que puedes leer y compartir. La diferencia está en cómo llegas a ellos. En vez de cargar una interfaz llena de elementos, escribes un comando sencillo para abrir una dirección, buscar algo o volver.</p>
+    <p>Cada petición debería traer lo necesario para esa acción: contenido útil, enlaces y una estructura clara. Menos recursos que descargar, menos elementos que procesar y menos datos moviéndose por la red.</p>
+  </section>
+
+  <section class="seccion contenedor">
+    <h2 class="seccion-titulo"><span class="num">01</span>Comandos como forma de navegar</h2>
+    <p class="intro">Estos comandos ilustran cómo podría sentirse la navegación. Son ejemplos de la propuesta, no una terminal interactiva.</p>
+    <div class="terminal" aria-label="Ejemplo ilustrativo de navegación mediante comandos">
+      <p><span class="prompt">&gt;</span> ayuda</p>
+      <p class="respuesta">Comandos disponibles: abrir, buscar, volver</p>
+      <p><span class="prompt">&gt;</span> abrir /hardware/</p>
+      <p class="respuesta">Abre la sección de proyectos de HardwareSimple.</p>
+      <p><span class="prompt">&gt;</span> buscar servidores</p>
+      <p class="respuesta">Muestra resultados relacionados con “servidores”.</p>
+    </div>
+  </section>
+
+  <section class="seccion contenedor">
+    <h2 class="seccion-titulo"><span class="num">02</span>Menos transferencia, más contenido</h2>
+    <div class="principios">
+      <article class="principio"><span class="ic">01</span><h3>Pedir lo concreto</h3><p>Cada comando expresa una intención y evita cargar pantallas o recursos que no hacen falta para esa visita.</p></article>
+      <article class="principio"><span class="ic">02</span><h3>Contenido primero</h3><p>Texto legible, enlaces directos y una estructura sencilla permiten que la información llegue sin depender de una aplicación pesada.</p></article>
+      <article class="principio"><span class="ic">03</span><h3>Una web abierta</h3><p>Las páginas mantienen direcciones compartibles y contenido que se puede leer con las herramientas habituales de la web.</p></article>
+    </div>
+  </section>
+
+  <section class="seccion contenedor cierre">
+    <h2>Una idea en exploración</h2>
+    <p>NanoInternet es una propuesta para pensar cómo una interfaz basada en comandos podría hacer la navegación más ligera y directa. Su lenguaje de comandos y su funcionamiento todavía están por definir.</p>
+    <a href="/">← Volver a las áreas del sitio</a>
+  </section>
+</Layout>
+
+<style>
+  .prosa { max-width:44rem; }
+  .lema { margin:-.75rem 0 1rem; color:var(--acento); font-family:var(--mono); font-size:1rem; }
+  .seccion.contenedor.prosa { max-width:68rem; }
+  .seccion.contenedor.prosa > p:not(.hero-terminal) { max-width:44rem; }
+  .prosa p, .intro, .cierre p { color:var(--texto-suave); }
+  .terminal { max-width:46rem; padding:1.25rem 1.5rem; border:1px solid var(--borde); border-radius:10px; background:var(--superficie); font-family:var(--mono); overflow-wrap:anywhere; }
+  .terminal p { margin:.25rem 0; }
+  .terminal .prompt { color:var(--acento); }
+  .respuesta { padding-left:1.25rem; color:var(--texto-apagado); font-size:.9rem; margin-bottom:1rem !important; }
+  .principios { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1.5rem; }
+  .principio { border-top:1px solid var(--borde); padding-top:1rem; }
+  .principio .ic { color:var(--acento); font: .8rem var(--mono); }
+  .principio h3 { margin:.5rem 0; font-size:1.05rem; }
+  .principio p { margin:0; color:var(--texto-suave); font-size:.92rem; }
+  .cierre { border-top:1px solid var(--borde); }
+  .cierre h2 { margin:0; }
+  .cierre p { max-width:44rem; }
+  @media(max-width:760px) { .principios { grid-template-columns:1fr; gap:1rem; } }
+</style>

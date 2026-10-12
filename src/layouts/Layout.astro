@@ -1,0 +1,79 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  area?: 'codigo' | 'hardware' | 'web' | 'personal';
+}
+
+const {
+  title = 'Tecnología útil — CodigoMinimo, HardwareSimple y NanoInternet',
+  description = 'Software, hardware y una web navegable por comandos, ligera y centrada en el contenido.',
+  area = 'personal',
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
+const siteUrl = new URL('/', Astro.site ?? Astro.url).href;
+const siteName = 'Tecnología útil';
+const socialImage = new URL('/og-default.png', Astro.site ?? Astro.url);
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': `${canonical.href}#webpage`,
+  url: canonical.href,
+  name: title,
+  description,
+  inLanguage: 'es-ES',
+  isPartOf: { '@id': `${siteUrl}#website` },
+};
+const websiteSchema = Astro.url.pathname === '/' ? {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${siteUrl}#website`,
+  url: siteUrl,
+  name: siteName,
+  inLanguage: 'es-ES',
+} : null;
+const structuredData = JSON.stringify(websiteSchema ? [websiteSchema, webPageSchema] : webPageSchema).replace(/</g, '\\u003c');
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#0b0f0a" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Tecnología útil: CodigoMinimo, HardwareSimple y NanoInternet" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <script type="application/ld+json" set:html={structuredData}></script>
+  </head>
+  <body data-area={area}>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <Header />
+    <main id="contenido">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

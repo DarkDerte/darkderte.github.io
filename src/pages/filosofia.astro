@@ -1,0 +1,122 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const manifiesto = [
+  {
+    num: '01',
+    titulo: 'Menos es más: reducción deliberada',
+    texto: 'La eficiencia no empieza cuando se optimiza: empieza cuando se decide qué no construir. Cada pantalla, cada botón y cada dependencia que no existe es menos código que mantener, menos superficie de errores y menos peso que transferir.',
+  },
+  {
+    num: '02',
+    titulo: 'El peso es un costo real',
+    texto: 'Una app de 100 MB no cuesta solo descarga. Cuesta RAM mientras se ejecuta, almacenamiento en el dispositivo, batería al actualizarse y tiempo de vida al usuario que espera. En el mundo móvil, cada megabyte se paga dos veces.',
+  },
+  {
+    num: '03',
+    titulo: 'Rendimiento como respeto',
+    texto: 'Cuando una app responde al instante, está diciendo "tu tiempo vale". Cuando hace girar un spinner dos segundos, está diciendo lo contrario. El software rápido no es un lujo de ingeniero: es una postura ética hacia el usuario.',
+  },
+  {
+    num: '04',
+    titulo: 'Sin dependencias, sin sorpresas',
+    texto: 'Cada librería que añades es código que no escribiste pero que mantendrás. Es una fuente de vulnerabilidades, de incompatibilidades y de sorpresas. Un proyecto que cabría en 5 KB crece a 5 MB con tres dependencias. La pregunta correcta nunca es "¿qué librería uso?", sino "¿realmente necesito una?"',
+  },
+  { 
+    num: '05',
+    titulo: 'Pequeño no significa simple',
+    texto: 'Hay una diferencia entre minimalismo y limitación. Un juego en 5 KB puede tener más profundidad que una app "rica en funciones" de 50 MB. La eficiencia no recorta la ambición: la concentra.',
+  },
+  {
+    num: '06',
+    titulo: 'El usuario también respira',
+    texto: 'Nuestras apps compiten con la atención y con la batería de las personas. Escribir software ligero es una forma de devolverles su tiempo, su memoria y su autonomía. La eficiencia es, en el fondo, generosidad.',
+  }
+];
+---
+
+<Layout
+  area="codigo"
+  title="Filosofía — CodigoMinimo"
+  description="Los seis principios del desarrollo de software óptimo y eficiente: menos peso, más valor."
+>
+  <section class="hero contenedor">
+    <p class="hero-terminal"><span class="prompt">$</span> cat filosofia.txt</p>
+    <h1>La filosofía del <span class="destacado">código mínimo</span></h1>
+    <p class="sub">
+      Seis principios que guían cada proyecto, cada archivo y cada línea que escribo.
+    </p>
+  </section>
+
+  <section class="seccion contenedor">
+    <div class="manifiesto">
+      {
+        manifiesto.map((m) => (
+          <article class="punto" id={`principio-${m.num}`}>
+            <span class="punto-num">{m.num}</span>
+            <h2>{m.titulo}</h2>
+            <p>{m.texto}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="seccion contenedor">
+    <div class="cita-final">
+      <blockquote>
+        «Un buen programa no es el que más funciones tiene, sino el que menos peso añade
+        al mundo que lo ejecuta.»
+      </blockquote>
+      <p class="cta-final">
+        <a class="btn btn-primario" href="/codigo/#apps">Ver cómo lo aplico →</a>
+      </p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .manifiesto {
+    max-width: 44rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  .punto {
+    border-left: 3px solid var(--borde);
+    padding-left: 1.5rem;
+  }
+  .punto-num {
+    font-family: var(--mono);
+    color: var(--acento);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+  }
+  .punto h2 {
+    margin: 0.35rem 0 0.75rem;
+    font-size: 1.35rem;
+    letter-spacing: -0.02em;
+  }
+  .punto p {
+    margin: 0;
+    color: var(--texto-suave);
+    font-size: 1.02rem;
+  }
+  .cita-final {
+    max-width: 44rem;
+  }
+  .cita-final blockquote {
+    margin: 0 0 1.5rem;
+    padding: 1.5rem 2rem;
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    background: var(--superficie);
+    font-size: 1.2rem;
+    font-family: var(--mono);
+    color: var(--texto);
+    quotes: none;
+  }
+  .cta-final {
+    margin: 0;
+  }
+</style>

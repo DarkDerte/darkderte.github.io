@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0b0f0a"/>
+  <path d="M0 0h12v630H0z" fill="#a3e635"/>
+  <path d="M70 78H1130" stroke="#22301c" stroke-width="2"/>
+  <path d="M70 540H1130" stroke="#22301c" stroke-width="2"/>
+  <text x="76" y="62" fill="#a3e635" font-family="Consolas, monospace" font-size="24">&gt; tecnologia útil</text>
+  <text x="76" y="220" fill="#e8f0e3" font-family="Arial, sans-serif" font-size="76" font-weight="700">Menos ruido.</text>
+  <text x="76" y="310" fill="#e8f0e3" font-family="Arial, sans-serif" font-size="76" font-weight="700">Más cosas útiles.</text>
+  <text x="78" y="390" fill="#b7c3ad" font-family="Arial, sans-serif" font-size="28">Software, hardware y una web recorrida con comandos.</text>
+  <text x="78" y="490" fill="#a3e635" font-family="Consolas, monospace" font-size="20">CODIGOMINIMO</text>
+  <text x="360" y="490" fill="#22d3ee" font-family="Consolas, monospace" font-size="20">HARDWARESIMPLE</text>
+  <text x="690" y="490" fill="#fbbf24" font-family="Consolas, monospace" font-size="20">NANOINTERNET</text>
+  <text x="78" y="583" fill="#74806b" font-family="Consolas, monospace" font-size="18">darkderte.github.io</text>
+</svg>

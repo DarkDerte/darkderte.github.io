@@ -1,0 +1,81 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import AppCard from '../../components/AppCard.astro';
+import HardwareCard from '../../components/HardwareCard.astro';
+import { getCollection } from 'astro:content';
+
+const apps = await getCollection('apps');
+const hardware = await getCollection('hardware');
+---
+
+<Layout title="Sobre mí — Tecnología práctica y curiosidad" description="Una presentación personal sobre software, hardware y una propuesta de web navegable mediante comandos.">
+  <section class="hero contenedor">
+    <p class="hero-terminal"><span class="prompt">$</span> whoami</p>
+    <h1>Sobre mí</h1>
+    <div class="prosa">
+      <p>¡Hola! Soy un apasionado de la tecnología, el software y el hardware.</p>
+      <p>Me gusta entender cómo funcionan las cosas, experimentar con nuevas ideas y construir soluciones propias. Disfruto tanto programando y desarrollando herramientas como montando sistemas, explorando dispositivos y buscando formas de aprovechar mejor la tecnología.</p>
+      <p>Este espacio reúne mis intereses por el desarrollo de software, el hardware y las formas más ligeras de recorrer la web: tres perspectivas que se conectan al construir y entender tecnología.</p>
+    </div>
+  </section>
+
+  <section class="seccion contenedor">
+    <h2 class="seccion-titulo"><span class="num">01</span>Qué encontrarás aquí</h2>
+    <div class="areas">
+      <article class="codigo"><p class="hero-terminal">SOFTWARE</p><h3>CodigoMinimo</h3><p>Un espacio para explorar la programación, desarrollar herramientas, resolver problemas técnicos y compartir soluciones prácticas. Me interesa especialmente entender cómo construir software útil, eficiente y sencillo de mantener.</p><a href="/codigo/">Explorar CodigoMinimo →</a></article>
+      <article class="hardware"><p class="hero-terminal">HARDWARE</p><h3>HardwareSimple</h3><p>La parte dedicada al hardware, los pequeños servidores, los dispositivos electrónicos y los proyectos que permiten llevar las ideas del software al mundo físico. Desde experimentar con equipos hasta montar soluciones propias.</p><a href="/hardware/">Explorar HardwareSimple →</a></article>
+      <article class="internet"><p class="hero-terminal">WEB</p><h3>NanoInternet</h3><p>Una propuesta para recuperar una web directa, navegable con comandos claros y pensada para enviar solo la información necesaria.</p><a href="/nanointernet/">Explorar NanoInternet →</a></article>
+    </div>
+  </section>
+
+  <section class="seccion contenedor prosa">
+    <h2 class="seccion-titulo"><span class="num">02</span>Mi forma de entender la tecnología</h2>
+    <p>Creo que la mejor manera de aprender tecnología es experimentar con ella.</p>
+    <p>Me gusta investigar, probar alternativas, entender por qué algo funciona y encontrar soluciones que sean útiles en la práctica. A veces eso significa escribir unas cuantas líneas de código; otras, configurar un servidor, conectar componentes o dedicar tiempo a resolver un problema aparentemente pequeño.</p>
+    <p>Valoro especialmente las soluciones sencillas, el software bien construido y la tecnología que podemos comprender, controlar y adaptar a nuestras necesidades.</p>
+    <p>No se trata solamente de utilizar herramientas, sino de aprender a construirlas y entender qué hay detrás.</p>
+  </section>
+
+  <section class="seccion contenedor">
+    <h2 class="seccion-titulo"><span class="num">03</span>Siempre hay algo entre manos</h2>
+    <p class="intro">Me gusta aprender construyendo. Por eso, además de compartir artículos, dedico tiempo a desarrollar proyectos propios, experimentar con nuevas tecnologías y poner a prueba diferentes soluciones. Algunos proyectos terminan convirtiéndose en herramientas útiles; otros se quedan como experimentos de los que siempre se aprende algo.</p>
+    {apps.length > 0 && <><h3>Software</h3><div class="grid-apps">{apps.slice(0, 3).map((app) => <AppCard app={app} />)}</div></>}
+    {hardware.length > 0 && <><h3>Hardware</h3><div class="grid-hardware">{hardware.slice(0, 3).map((item) => <HardwareCard item={item} />)}</div></>}
+    <p><a href="/codigo/#apps">Ver catálogo de apps →</a></p>
+  </section>
+
+  <section class="seccion contenedor prosa">
+    <h2 class="seccion-titulo"><span class="num">04</span>Compartir para aprender</h2>
+    <p>Documentar un proyecto obliga a entenderlo mejor, ordenar las ideas y encontrar soluciones que quizá habían pasado desapercibidas.</p>
+    <p>Por eso me gusta compartir lo que voy aprendiendo: configuraciones, problemas que he encontrado, soluciones que me han funcionado y cosas que merece la pena probar.</p>
+    <p>La idea es crear un espacio al que pueda volver en el futuro y que también resulte útil a otras personas que estén investigando, aprendiendo o construyendo sus propios proyectos.</p>
+  </section>
+
+  <section class="seccion contenedor contacto">
+    <h2 class="seccion-titulo"><span class="num">05</span>¿Hablamos de tecnología?</h2>
+    <p>Me interesan las ideas, los proyectos y las conversaciones sobre software, hardware y cómo construir cosas útiles.</p>
+    <p class="nota">Los datos de contacto se añadirán aquí cuando estén configurados.</p>
+  </section>
+</Layout>
+
+<style>
+  .prosa { max-width:44rem; }
+  .seccion.contenedor.prosa { max-width:68rem; }
+  .seccion.contenedor.prosa > p { max-width:44rem; }
+  .prosa p, .intro, .areas article > p:not(.hero-terminal), .contacto > p { color:var(--texto-suave); }
+  .areas { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:2rem; }
+  .areas article { border-top:1px solid var(--borde); padding-top:1rem; }
+  .areas article.codigo { border-color:var(--acento); }
+  .areas article.codigo a { color:var(--acento); }
+  .areas article.hardware { border-color:var(--hardware-acento); }
+  .areas article.hardware a { color:var(--hardware-acento); }
+  .areas article.internet { border-color:var(--web-acento); }
+  .areas article.internet a { color:var(--web-acento); }
+  .areas h3 { margin:0; }
+  .areas article > p:not(.hero-terminal) { margin:.5rem 0 1rem; }
+  h3 { margin:2rem 0 0; font-size:1.1rem; }
+  .grid-apps, .grid-hardware { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1rem; margin-top:1rem; }
+  .nota { color:var(--texto-apagado) !important; font-size:.9rem; }
+  @media(max-width:900px) { .areas { grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.5rem; } }
+  @media(max-width:650px) { .areas { grid-template-columns:1fr; } }
+</style>

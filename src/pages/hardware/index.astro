@@ -1,0 +1,85 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import HardwareCard from '../../components/HardwareCard.astro';
+import CategoryFilter from '../../components/CategoryFilter.astro';
+import { getCollection } from 'astro:content';
+
+const hardware = await getCollection('hardware');
+const destacadas = hardware.filter((item) => item.data.destacado);
+const resto = hardware.filter((item) => !item.data.destacado);
+const categories = [...new Set(hardware.map((item) => item.data.category))].sort((a, b) => a.localeCompare(b, 'es'));
+---
+
+<Layout
+  area="hardware"
+  title="HardwareSimple — Proyectos físicos y electrónica"
+  description="Proyectos de hardware, dispositivos y experimentos para construir y entender la tecnología."
+>
+  <section class="hero contenedor">
+    <p class="hero-terminal"><span class="prompt">$</span> ls hardware-simple/</p>
+    <h1>Hardware<span class="destacado">Simple</span></h1>
+    <p class="sub">
+      Proyectos para explorar placas, dispositivos y experimentos físicos con soluciones sencillas y comprensibles.
+    </p>
+    <div class="cta">
+      <a class="btn btn-primario" href="#proyectos">Ver proyectos</a>
+    </div>
+  </section>
+
+  {hardware.length > 0 ? (
+    <CategoryFilter name="hardware-categoria" label="Filtrar proyectos por categoría" categories={categories}>
+      {destacadas.length > 0 && (
+        <section class="seccion contenedor">
+          <h2 class="seccion-titulo"><span class="num">01</span>Destacados</h2>
+          <div class="grid-hardware">
+            {destacadas.map((item) => <HardwareCard item={item} />)}
+          </div>
+        </section>
+      )}
+      <section class="seccion contenedor" id="proyectos">
+        <h2 class="seccion-titulo"><span class="num">02</span>Todos los proyectos</h2>
+        <div class="grid-hardware">
+          {resto.map((item) => <HardwareCard item={item} />)}
+        </div>
+      </section>
+    </CategoryFilter>
+  ) : (
+    <section class="seccion contenedor" id="proyectos">
+      <div class="vacio">
+        <p class="vacio-icono" aria-hidden="true">⌁</p>
+        <h2>Aún no hay proyectos publicados</h2>
+        <p>Cuando haya un proyecto de hardware que mostrar, su ficha aparecerá aquí.</p>
+      </div>
+    </section>
+  )}
+</Layout>
+
+<style>
+  .grid-hardware {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .vacio {
+    max-width: 42rem;
+    padding: 2rem;
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    background: var(--superficie);
+  }
+  .vacio-icono {
+    margin: 0;
+    color: var(--acento);
+    font-family: var(--mono);
+    font-size: 1.5rem;
+  }
+  .vacio h2 {
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+  }
+  .vacio p:last-child {
+    margin: 0;
+    color: var(--texto-suave);
+  }
+</style>

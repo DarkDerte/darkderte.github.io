@@ -1,35 +1,59 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import Layout from '../layouts/Layout.astro';
+import AppCard from '../components/AppCard.astro';
+import HardwareCard from '../components/HardwareCard.astro';
+import { getCollection } from 'astro:content';
+
+const apps = await getCollection('apps');
+const hardware = await getCollection('hardware');
+const appsRecientes = apps.slice(0, 3);
+const hardwareReciente = hardware.slice(0, 3);
 ---
 
-<!doctype html>
-<html lang="es">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>Bienvenidos!</h1>
-			<p>
-				Mi nombre es David, aunque normalmente me llaman Derte.
-			</p>
-			<p>	
-				Me dedico a ser programador, y me gusta crear cosas desde 0.<br />
-				Ya sea programando o manualidades.
-			</p>
-			<p>
-				En la parte de Proyectos, tendréis un listado de los que he realizado, estoy realizando o realizaré. Espero que os sirva para vuestros proyectos personales, y que lo disfrutéis.
-			</p>
-			<p>
-				Actualmente, hay diferentes medios donde iré subiendo los proyectos.
-				<br />
-				Se libre de visitarlos y disfrutarlos.
-			</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+<Layout title="Tecnología útil — CodigoMinimo, HardwareSimple y NanoInternet" description="Software, hardware y NanoInternet: una propuesta de web navegable por comandos, ligera y centrada en el contenido.">
+  <section class="hero contenedor">
+    <p class="hero-terminal"><span class="prompt">$</span> software + hardware + nanointernet</p>
+    <h1>Tecnología para <span class="destacado">entender y construir.</span></h1>
+    <p class="sub">Un espacio para explorar el software que construimos, el hardware que lo hace posible y nuevas formas de recorrer la web con pocos datos y comandos claros.</p>
+    <div class="cta"><a class="btn btn-primario" href="/codigo/">Explorar CodigoMinimo</a><a class="btn btn-secundario" href="/hardware/">Explorar HardwareSimple</a><a class="btn btn-secundario btn-internet" href="/nanointernet/">Explorar NanoInternet</a></div>
+  </section>
+
+  <section class="seccion contenedor">
+    <h2 class="seccion-titulo"><span class="num">01</span>Tres formas de explorar la tecnología</h2>
+    <div class="areas">
+      <a class="area codigo" href="/codigo/"><span class="etiqueta">SOFTWARE · CODIGOMINIMO</span><h3>Ideas convertidas en herramientas.</h3><p>Programación, desarrollo y utilidades ligeras que buscan resolver problemas con claridad y el mínimo peso.</p><span class="siguiente">Entrar en CodigoMinimo →</span></a>
+      <a class="area hardware" href="/hardware/"><span class="etiqueta">HARDWARE · HARDWARESIMPLE</span><h3>Ideas que toman forma física.</h3><p>Dispositivos, electrónica y proyectos para experimentar con la tecnología que podemos montar y adaptar.</p><span class="siguiente">Entrar en HardwareSimple →</span></a>
+      <a class="area internet" href="/nanointernet/"><span class="etiqueta">WEB · NANOINTERNET</span><h3>La web, recorrida con comandos.</h3><p>Una propuesta para navegar de forma directa, pedir justo lo que necesitas y reducir la información que se transmite.</p><span class="siguiente">Explorar NanoInternet →</span></a>
+    </div>
+  </section>
+
+  {appsRecientes.length > 0 && <section class="seccion contenedor"><div class="cabecera-seccion"><h2 class="seccion-titulo"><span class="num">02</span>Del lado del software</h2><a href="/codigo/#apps">Ver todas las apps →</a></div><div class="grid-apps">{appsRecientes.map((app) => <AppCard app={app} />)}</div></section>}
+  {hardwareReciente.length > 0 && <section class="seccion contenedor"><div class="cabecera-seccion"><h2 class="seccion-titulo"><span class="num">03</span>Del lado del hardware</h2><a href="/hardware/">Todos los proyectos →</a></div><div class="grid-hardware">{hardwareReciente.map((item) => <HardwareCard item={item} />)}</div></section>}
+
+  <section class="seccion contenedor acerca"><div><p class="hero-terminal"><span class="prompt">$</span> whoami</p><h2>Aprender haciendo.</h2><p>Me gusta entender cómo funcionan las cosas, experimentar y construir soluciones propias. Este sitio reúne mis proyectos e ideas sobre software y hardware.</p></div><a class="btn btn-secundario" href="/sobre-mi/">Conoce más sobre mí →</a></section>
+</Layout>
+
+<style>
+  .hero .cta .btn:nth-child(2) { border-color:var(--hardware-acento); color:var(--hardware-acento); }
+  .hero .cta .btn:nth-child(2):hover { background:color-mix(in srgb,var(--hardware-acento) 10%,transparent); }
+  .hero .cta .btn-internet { border-color:var(--web-acento); color:var(--web-acento); }
+  .hero .cta .btn-internet:hover { background:color-mix(in srgb,var(--web-acento) 10%,transparent); }
+  .areas { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:2.5rem; }
+  .area { padding:1rem 0 1.25rem; border-top:2px solid var(--acento); color:inherit; text-decoration:none; }
+  .area.hardware { border-color:var(--hardware-acento); }
+  .area.internet { border-color:var(--web-acento); }
+  .etiqueta { color:var(--texto-apagado); font:0.72rem var(--mono); letter-spacing:.08em; }
+  .area h3 { margin:.8rem 0 .5rem; font-size:1.35rem; letter-spacing:-.02em; }
+  .area p, .acerca p:not(.hero-terminal) { max-width:33rem; color:var(--texto-suave); }
+  .siguiente { color:var(--acento); font-size:.9rem; }
+  .hardware .siguiente { color:var(--hardware-acento); }
+  .internet .siguiente { color:var(--web-acento); }
+  .cabecera-seccion { display:flex; align-items:baseline; justify-content:space-between; gap:1rem; }
+  .cabecera-seccion > a { white-space:nowrap; font-size:.9rem; }
+  .grid-hardware { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1rem; margin-top:1.5rem; }
+  .acerca { display:flex; align-items:center; justify-content:space-between; gap:2rem; border-top:1px solid var(--borde); }
+  .acerca h2 { margin:0; font-size:1.7rem; }
+  .acerca p:not(.hero-terminal) { margin:.5rem 0 0; }
+  @media(max-width:900px) { .areas { grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.75rem; } }
+  @media(max-width:650px) { .areas { grid-template-columns:1fr; gap:1.25rem; } .acerca { align-items:flex-start; flex-direction:column; } .cabecera-seccion { align-items:flex-start; flex-direction:column; gap:0; } }
+</style>

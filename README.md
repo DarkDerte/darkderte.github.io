@@ -1,68 +1,61 @@
-# Astro Starter Kit: Blog
+# darkderte.github.io
+
+Sitio personal de Derte, construido con Astro. Reúne sus aplicaciones de software, proyectos de hardware, la propuesta NanoInternet y páginas sobre su perfil y filosofía.
+
+## Secciones del sitio
+
+- **Inicio (`/`)**: presentación y acceso a las distintas áreas del sitio.
+- **Código Mínimo (`/codigo/`)**: catálogo de aplicaciones y herramientas de software.
+- **Hardware Simple (`/hardware/`)**: proyectos, dispositivos y experimentos de hardware.
+- **NanoInternet (`/nanointernet/`)**: propuesta de una web de estilo terminal, basada en comandos y pensada para enviar solo la información necesaria. Es una página conceptual; no implementa una terminal interactiva.
+- **Filosofía (`/filosofia`)** y **Sobre mí (`/sobre-mi/`)**: ideas y perfil personal.
+
+Los proyectos de Código Mínimo y Hardware Simple se mantienen como colecciones separadas. Cada elemento tiene su propia página de detalle. Las categorías de ambos catálogos se pueden filtrar con controles HTML y CSS, sin JavaScript en el navegador.
+
+## Añadir un proyecto
+
+Los proyectos se escriben como archivos Markdown o MDX en su colección:
+
+- Aplicaciones: `src/content/apps/`
+- Hardware: `src/content/hardware/`
+
+El esquema y los campos admitidos están definidos en `src/content.config.ts`. Cada archivo debe incluir los campos obligatorios de su colección, como `title`, `description`, `category`, `status` y `stack`. Puede incluir también datos opcionales como `icon`, `url`, `repo` y `destacado`. Las categorías y estados válidos varían entre software y hardware; consulta el esquema antes de añadir una entrada.
+
+## Desarrollo local
+
+Se necesita Node.js y npm. Desde la raíz del repositorio:
 
 ```sh
-npm create astro@latest -- --template blog
+npm install
+npm run dev
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/blog)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/blog)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/blog/devcontainer.json)
+El servidor local queda disponible en `http://localhost:4321`.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Comandos
 
-![blog](https://github.com/withastro/astro/assets/2244813/ff10799f-a816-4703-b967-c78997e8323d)
+| Comando | Acción |
+| --- | --- |
+| `npm run dev` | Inicia el servidor de desarrollo de Astro. |
+| `npm run start` | Alias para iniciar el servidor de desarrollo. |
+| `npm run build` | Comprueba el proyecto y genera el sitio estático en `dist/`. |
+| `npm run preview` | Sirve localmente la compilación de `dist/`. |
+| `npm run astro -- --help` | Muestra la ayuda de la CLI de Astro. |
 
-Features:
-
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+## Estructura
 
 ```text
-├── public/
-├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+public/                 Archivos estáticos, como imágenes y robots.txt
+src/
+  components/           Componentes compartidos
+  content/
+    apps/               Entradas de Código Mínimo
+    hardware/           Entradas de Hardware Simple
+  layouts/              Estructuras de página
+  pages/                Rutas del sitio
+  styles/               Estilos globales
+  content.config.ts     Esquemas de las colecciones
+astro.config.mjs        Configuración de Astro e integraciones
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-
-## Credit
-
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+El sitio se publica bajo `https://darkderte.github.io`. Astro genera el sitemap durante la compilación mediante la integración configurada en `astro.config.mjs`.

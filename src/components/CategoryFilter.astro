@@ -1,0 +1,41 @@
+---
+interface Props {
+  categories: string[];
+  name: string;
+  label: string;
+  contained?: boolean;
+}
+
+const { categories, name, label, contained = false } = Astro.props;
+---
+
+<div class:list={['catalogo-filtrable', { 'catalogo-anidado': contained }]}>
+  <fieldset class="filtros-categoria">
+    <legend>{label}</legend>
+    <div class="filtros-lista">
+      <input id={`${name}-todas`} type="radio" name={name} data-filtro="__all" checked />
+      <label for={`${name}-todas`}>Todas</label>
+      {categories.map((category) => {
+        const id = `${name}-${category.toLowerCase().replaceAll(/[^a-z0-9]+/g, '-')}`;
+        return (
+          <>
+            <input id={id} type="radio" name={name} data-filtro={category} />
+            <label for={id}>{category}</label>
+          </>
+        );
+      })}
+    </div>
+  </fieldset>
+  <slot />
+</div>
+
+<style>
+  .filtros-categoria { width:100%; max-width:68rem; box-sizing:border-box; margin:1.5rem auto; padding:0 1.25rem; border:0; }
+  .catalogo-anidado .filtros-categoria { padding:0; }
+  .filtros-categoria legend { margin-bottom:.65rem; color:var(--texto-apagado); font: .75rem var(--mono); letter-spacing:.04em; }
+  .filtros-lista { display:flex; flex-wrap:wrap; gap:.5rem; }
+  .filtros-lista input { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; clip-path:inset(50%); }
+  .filtros-lista label { padding:.35rem .7rem; border:1px solid var(--borde); border-radius:999px; color:var(--texto-suave); cursor:pointer; font-size:.82rem; }
+  .filtros-lista input:checked + label { border-color:var(--acento); color:var(--acento); background:color-mix(in srgb,var(--acento) 9%,transparent); }
+  .filtros-lista input:focus-visible + label { outline:2px solid var(--acento); outline-offset:3px; }
+</style>
