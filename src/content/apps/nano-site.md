@@ -6,7 +6,7 @@ status: "idea"
 stack: ["Astro", "CSS"]
 size: "~14 KB"
 icon: "⌘"
-destacado: true
+destacado: false
 ---
 
 Este sitio es la demostración práctica de todo lo que defiendo.
